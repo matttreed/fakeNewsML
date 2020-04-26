@@ -17,11 +17,18 @@ Webscraping Fake News Detector
 def readFile(filename):
     data = []
     with open(filename, 'r') as file:
-        lines = file.readlines()
-        for line in lines:
-            index = line.find(',')
-            index2 = line.find(',', index + 1)
-            data.append([line[0:index], line[index + 1:index2], line[index2 + 1:]])
+        lines = list(file.readlines())
+        title = "default title"
+        body = ""
+        value = "REAL"
+        for i in range(len(lines)):
+            if i == 0:
+                lines[i] = title
+            if i in range(1, len(lines) - 1):
+                body += lines[i]
+            if i == len(lines) - 1:
+                value = lines[i]
+        data.append([title, body, value])
     return data
 
 
@@ -88,7 +95,7 @@ def main():
     testpicklevector = "testPickleVector"
 
     if len(args) > 1 and args[1] == "-createPickles":
-        constructPickles("news.csv")
+        constructPickles(args[2])
 
     if len(args) > 1 and args[1] == "-useExisting":
         testpickle = args[2]
