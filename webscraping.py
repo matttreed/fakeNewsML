@@ -91,23 +91,26 @@ def constructPickles(filename):
 
 def main():
 
-    # Example input: "webscraping.py testData.txt -useExisting testPickle.txt testPickleVector.txt"
+    # Example input: "python3 webscraping.py testData -useExisting testPickle testPickleVector"
+    # Example input: "python3 webscraping.py fakeNewsExample -createPickles news.csv"
     args = sys.argv[1:]
 
     data = readFile(args[0])
 
-    testpickle = "testPickle"
-    testpicklevector = "testPickleVector"
+    testpickle = ""
+    testpicklevector = ""
 
-    if len(args) > 1 and args[1] == "-createPickles":
+    if len(args) > 2 and args[1] == "-createPickles":
         constructPickles(args[2])
 
-    if len(args) > 1 and args[1] == "-useExisting":
+    elif len(args) > 3 and args[1] == "-useExisting":
         testpickle = args[2]
         testpicklevector = args[3]
 
-    confidence, value = predictValue(testpickle, testpicklevector, data)
+    else:
+        print("Input not recognized")
 
+    confidence, value = predictValue(testpickle, testpicklevector, data)
     print(f'Confidence is: {confidence}')
     print(f'Expected value is: {value}')
 
