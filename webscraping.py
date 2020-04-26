@@ -24,10 +24,15 @@ def readFile(filename):
         for i in range(len(lines)):
             if i == 0:
                 lines[i] = title
-            if i in range(1, len(lines) - 1):
+            elif i in range(1, len(lines) - 1):
                 body += lines[i]
-            if i == len(lines) - 1:
-                value = lines[i]
+            elif i == len(lines) - 1:
+                if "REAL" in lines[i]:
+                    value = "REAL"
+                elif "FAKE" in lines[i]:
+                    value = "FAKE"
+                else:
+                    body += lines[i]
         data.append([title, body, value])
     return data
 
